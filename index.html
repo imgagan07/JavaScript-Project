@@ -21,7 +21,7 @@
             position: relative;
         }
 
-        /* Top-right buttons */
+        /* Navigation Buttons */
         .nav-buttons {
             position: absolute;
             top: 15px;
@@ -30,7 +30,7 @@
 
         .nav-buttons button {
             margin-left: 10px;
-            padding: 6px 12px;
+            padding: 8px 14px;
             border: none;
             background: white;
             color: #8B0000;
@@ -41,9 +41,11 @@
 
         h1 { font-size: 24px; }
         h2 { font-size: 18px; }
-        h3 { font-size: 14px; }
+        h3 { font-size: 16px; }
 
-        .section { padding: 20px; }
+        .section {
+            padding: 20px;
+        }
 
         #menu {
             display: flex;
@@ -63,13 +65,14 @@
 
         .item img {
             width: 100%;
-            height: 130px;
+            height: 140px;
             border-radius: 10px;
+            object-fit: cover;
         }
 
         button {
             margin: 5px;
-            padding: 6px 10px;
+            padding: 8px 12px;
             border: none;
             background: #8B0000;
             color: white;
@@ -77,9 +80,17 @@
             cursor: pointer;
         }
 
-        .delete { background: red; }
-        .edit { background: orange; }
-        .order-btn { background: green; }
+        .delete {
+            background: red;
+        }
+
+        .edit {
+            background: orange;
+        }
+
+        .order-btn {
+            background: green;
+        }
 
         .form {
             text-align: center;
@@ -89,13 +100,14 @@
         input {
             margin: 5px;
             padding: 8px;
-            width: 200px;
+            width: 220px;
         }
 
         .cart {
             text-align: center;
             font-weight: bold;
             margin-top: 20px;
+            padding-bottom: 20px;
         }
     </style>
 </head>
@@ -107,132 +119,290 @@
     <p>Authentic Vegetarian Punjabi Food</p>
 
     <div class="nav-buttons">
-        <button onclick="window.open('about.html','_blank')">About Us</button>
-        <button onclick="window.open('contact.html','_blank')">Contact Us</button>
+        <button onclick="window.location.href='about.html'">
+            About Us
+        </button>
+
+        <button onclick="window.location.href='contact.html'">
+            Contact Us
+        </button>
     </div>
 </header>
 
 <div class="section">
 
+    <!-- Add Item Form -->
     <div class="form">
+
         <h3>Add New Item</h3>
+
         <input id="name" placeholder="Item Name">
+
         <input id="price" type="number" placeholder="Price">
-        <input id="img" placeholder="Image URL"><br>
-        <button onclick="addItem()">Add Item</button>
+
+        <input id="img" placeholder="Image URL">
+
+        <br>
+
+        <button onclick="addItem()">
+            Add Item
+        </button>
+
     </div>
 
+    <!-- Menu -->
     <div id="menu"></div>
 
+    <!-- Cart -->
     <div class="cart">
-        🛒 Items: <span id="count">0</span> |
-        💰 Total: ₹<span id="total">0</span>
-        <br><br>
-        <button class="order-btn" onclick="placeOrder()">Place Order</button>
-    </div>
 
+        🛒 Items:
+        <span id="count">0</span>
+
+        |
+
+        💰 Total:
+        ₹<span id="total">0</span>
+
+        <br><br>
+
+        <button class="order-btn" onclick="placeOrder()">
+            Place Order
+        </button>
+
+    </div>
 
 </div>
 
 <script>
+
 let menu = JSON.parse(localStorage.getItem("menu")) || [
-    {name:"Dal Makhani", price:220, img:"https://images.unsplash.com/photo-1625944525533-473f1c7d54e7"},
-    {name:"Shahi Paneer", price:260, img:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7"}
+
+    {
+        name:"Dal Makhani",
+        price:220,
+        img:"https://t3.ftcdn.net/jpg/20/09/40/84/240_F_2009408481_dZOwbLc1O5hezUiglRJQ8R7E548DwETT.jpg"
+    },
+
+    {
+        name:"Shahi Paneer",
+        price:260,
+        img:"https://images.unsplash.com/photo-1631452180519-c014fe946bc7"
+    },
+
+    {
+        name:"Chhole Bhature",
+        price:300,
+        img:"https://madhurasrecipe.com/wp-content/uploads/2025/09/MR-Chole-Bhature-featured.jpg"
+    },
+
+    {
+        name:"Mix Veg",
+        price:320,
+        img:"https://t4.ftcdn.net/jpg/19/36/26/13/240_F_1936261302_aPA720dlrZRJLVNSkL1wvvtdtcfEriVG.jpg"
+    },
+
+    {
+        name:"Tandoori Roti",
+        price:80,
+        img:"https://www.indianhealthyrecipes.com/wp-content/uploads/2023/09/tandoori-roti-recipe.jpg"
+    },
+
+    {
+        name:"Stuffed Parantha",
+        price:90,
+        img:"https://t3.ftcdn.net/jpg/02/29/54/98/240_F_229549828_xo7l3SGKAgR5JKNQWGdu7fkswoJImLHa.jpg"
+    },
+
+    {
+        name:"Rajma Chawal",
+        price:450,
+        img:"https://t3.ftcdn.net/jpg/12/71/66/26/240_F_1271662638_tMrZMMyAH7CiA4vTgTg7zBT4dNVThCeX.jpg"
+    },
+
+    {
+        name:"Lassi",
+        price:70,
+        img:"https://www.cubesnjuliennes.com/wp-content/uploads/2025/07/Punjabi-Sweet-Lassi-Drink-Recipe.jpg"
+    },
+
+    {
+        name:"Kheer",
+        price:370,
+        img:"https://www.sugarfree-india.com/wp-content/uploads/2025/12/sugar-free-mawa-kheer-recipe.webp"
+    },
+
+    {
+        name:"Pinni",
+        price:550,
+        img:"https://t3.ftcdn.net/jpg/02/56/84/98/240_F_256849853_UP8zy0EETxkzTFDA8zGInFDriOVEHhic.jpg"
+    },
+
+    {
+        name:"Sarson Da Saag",
+        price:420,
+        img:"https://t3.ftcdn.net/jpg/04/41/89/88/240_F_441898874_mtNaeDpasXSmlToEPujyewcSMc2a6JSP.jpg"
+    }
+
 ];
 
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
 function save() {
+
     localStorage.setItem("menu", JSON.stringify(menu));
+
     localStorage.setItem("cart", JSON.stringify(cart));
 }
 
 function showMenu() {
+
     let div = document.getElementById("menu");
+
     div.innerHTML = "";
 
     menu.forEach((item, index) => {
+
         div.innerHTML += `
+
         <div class="item">
+
             <img src="${item.img}">
+
             <h4>${item.name}</h4>
+
             <p>₹${item.price}</p>
 
-            <button onclick="addToCart(${index})">Add</button>
-            <button class="edit" onclick="editPrice(${index})">Edit Price</button>
-            <button class="delete" onclick="deleteItem(${index})">Delete</button>
+            <button onclick="addToCart(${index})">
+                Add
+            </button>
+
+            <button class="edit" onclick="editPrice(${index})">
+                Edit Price
+            </button>
+
+            <button class="delete" onclick="deleteItem(${index})">
+                Delete
+            </button>
+
         </div>
+
         `;
     });
 }
 
 function addItem() {
+
     let name = document.getElementById("name").value;
+
     let price = document.getElementById("price").value;
+
     let img = document.getElementById("img").value;
 
     if (!name || !price || !img) {
-        alert("Fill all fields");
+
+        alert("Please fill all fields");
+
         return;
     }
 
-    menu.push({name, price:Number(price), img});
+    menu.push({
+
+        name: name,
+
+        price: Number(price),
+
+        img: img
+    });
+
     save();
+
     showMenu();
+
+    document.getElementById("name").value = "";
+    document.getElementById("price").value = "";
+    document.getElementById("img").value = "";
 }
 
 function deleteItem(index) {
+
     menu.splice(index, 1);
+
     save();
+
     showMenu();
 }
 
 function editPrice(index) {
+
     let newPrice = prompt("Enter new price:");
+
     if (newPrice && !isNaN(newPrice)) {
+
         menu[index].price = Number(newPrice);
+
         save();
+
         showMenu();
     }
 }
 
 function addToCart(index) {
+
     let item = menu[index];
 
     let found = cart.find(i => i.name === item.name);
 
     if (found) {
+
         found.qty++;
+
     } else {
-        cart.push({...item, qty:1});
+
+        cart.push({
+
+            ...item,
+
+            qty: 1
+        });
     }
 
     updateCart();
+
     save();
 }
 
 function updateCart() {
+
     let count = 0;
+
     let total = 0;
 
     cart.forEach(i => {
+
         count += i.qty;
+
         total += i.price * i.qty;
     });
 
     document.getElementById("count").innerText = count;
+
     document.getElementById("total").innerText = total;
 }
 
 function placeOrder() {
+
     if (cart.length === 0) {
+
         alert("Cart is empty!");
+
         return;
     }
 
     let summary = "🧾 Order Summary:\n\n";
 
     cart.forEach(item => {
+
         summary += `${item.name} x ${item.qty} = ₹${item.price * item.qty}\n`;
     });
 
@@ -241,12 +411,16 @@ function placeOrder() {
     alert(summary + "\n\n✅ Order Placed Successfully!");
 
     cart = [];
+
     save();
+
     updateCart();
 }
 
 showMenu();
+
 updateCart();
+
 </script>
 
 </body>
